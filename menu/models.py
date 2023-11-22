@@ -12,13 +12,16 @@ class Menu(models.Model):
 
 
 class Item(models.Model):
-    menu = models.ForeignKey(Menu, blank=True, on_delete=models.CASCADE, related_name='items')
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name='items', verbose_name='Меню')
     title = models.CharField(max_length=255, verbose_name='Название')
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children')
+    parent = models.ForeignKey('self', on_delete=models.CASCADE, blank=True, null=True, related_name='children', verbose_name='Родитель', )
 
     class Meta:
         verbose_name = 'Пункт меню'
         verbose_name_plural = 'Пункты меню'
 
     def __str__(self):
-        return self.title
+        return self.menu.title + " " + self.title
+    
+    def limit_parent_choises(self):
+        pass
